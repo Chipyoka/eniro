@@ -51,7 +51,6 @@ public class MainSystem {
 
 
 
-
     private static void enrollPupil(Scanner scanner) {
         System.out.println("\n--- Enroll New Pupil ---");
     
@@ -66,77 +65,91 @@ public class MainSystem {
         String lastName = scanner.nextLine();
     
         System.out.print("Enter Age: ");
-        int age = scanner.nextInt(); // Changed to int
+        int age = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
     
         System.out.print("Enter Gender (Male/Female): ");
-        String gender = scanner.next(); // Changed to next() to avoid consuming the newline character
+        String gender = scanner.nextLine();
     
-        // Step 1: Conduct Soft Skill Assessment
+        // Step 1: Conduct Soft Skill Assessment with Questions
         System.out.println("\n--- Soft Skill Assessment ---");
-        System.out.print("Enter Communication Skills score (1-10): ");
-        int communication = scanner.nextInt();
     
-        System.out.print("Enter Teamwork Skills score (1-10): ");
-        int teamwork = scanner.nextInt();
+        // Ask communication-related questions
+        int communicationScore = askQuestion(scanner, "Do you enjoy speaking in front of groups or leading discussions?");
+        
+        // Ask teamwork-related questions
+        int teamworkScore = askQuestion(scanner, "Do you prefer working with others in a team rather than alone?");
+        
+        // Ask problem-solving-related questions
+        int problemSolvingScore = askQuestion(scanner, "Do you enjoy solving puzzles or figuring out complex problems?");
+        
+        // Ask creativity-related questions
+        int creativityScore = askQuestion(scanner, "Do you often come up with creative ideas or new ways of doing things?");
+        
+        // Step 2: Use the SoftSkillAssessment class to determine stream based on the derived scores
+        SoftSkillAssessment softSkillAssess = new SoftSkillAssessment();  // Initialize assessment object
+        String stream = softSkillAssess.assessSkills(communicationScore, teamworkScore, problemSolvingScore, creativityScore);  // Assess and determine stream
     
-        System.out.print("Enter Problem Solving Skills score (1-10): ");
-        int problemSolving = scanner.nextInt();
+        System.out.println("\nBased on the assessment, the recommended stream for the pupil is: " + stream);
     
-        System.out.print("Enter Creativity Skills score (1-10): ");
-        int creativity = scanner.nextInt();
+        // Step 3: Enroll pupil into the system with the determined stream
+        Pupil pupil = new Pupil(pupilID, firstName, lastName, age, gender, 8, stream);  // Assuming default grade level is 8
     
-        // Assess soft skills and get the stream recommendation
-        String stream = softSkillAssess.assessSkills(communication, teamwork, problemSolving, creativity);
-        System.out.println("Based on the soft skill assessment, the recommended stream is: " + stream);
+        System.out.println("\nEnrolling pupil into the " + stream + " stream.");
     
-        // Step 2: Provide Career Guidance based on soft skill assessment
-        System.out.println("\n--- Career Guidance ---");
-    
-        // Create a map to hold pupil responses
-        Map<String, String> responses = new HashMap<>();
-        responses.put("Do you enjoy working with numbers or solving complex problems?", "Yes, I love numbers."); // Example response
-        responses.put("Do you have a strong interest in science and technology?", "Yes, I enjoy science."); // Add other responses as needed
-        responses.put("Are you more comfortable with creative tasks like drawing or writing?", "I prefer drawing."); // Example response
-        responses.put("Do you enjoy helping people or working in a team?", "Yes, I love teamwork."); // Example response
-        responses.put("Do you prefer working with your hands, such as building or fixing things?", "No, I prefer mental challenges."); // Example response
-    
-        // Create a Pupil object with the provided details
-        Pupil pupil = new Pupil(pupilID, firstName, lastName, age, gender, 8, stream);  // Assuming Grade 8 is represented as 8
-        careerGuidance.conductGuidanceSession(pupil, responses);
-    
-        // Step 3: Enroll pupil into the recommended stream
-        System.out.println("\nPupil will be enrolled into the " + stream + " stream.");
-    
-        // Insert pupil record into the database, including stream
         String[] columns = {"pupilID", "firstName", "lastName", "age", "gender", "gradeLevel", "stream"};
-        String[] values = {pupilID, firstName, lastName, String.valueOf(age), gender, "8", stream};  // Assuming enrolling into Grade 8 for simplicity
-        // Handle potential database errors
-        dbManager.insert("Pupil", columns, values);
+        String[] values = {pupilID, firstName, lastName, String.valueOf(age), gender, "8", stream};  // Assuming grade level is 8
+        dbManager.insert("Pupil", columns, values);  // Insert the pupil's record into the database
+    
         System.out.println("Pupil enrolled successfully!");
     }
+    
+    // Method to ask a yes/no question and return a score based on the response
+    private static int askQuestion(Scanner scanner, String question) {
+        System.out.println(question + " (yes/no): ");
+        String response = scanner.nextLine().trim().toLowerCase();
+    
+        // If "yes", give 10 points; if "no", give 5 points
+        if (response.equals("yes")) {
+            return 10;  // High score for positive answer
+        } else if (response.equals("no")) {
+            return 5;  // Lower score for negative answer
+        } else {
+            System.out.println("Invalid response. Defaulting to 5 points.");
+            return 5;  // Default to 5 for invalid input
+        }
+    }
+    
+
+
+
+
+
+
+
 
 
     // Method for admin login and showing admin management menu
     private static void adminLogin(Scanner scanner) {
         System.out.println("\n--- Admin Login ---");
 
-        System.out.print("Enter Username: ");
-        String username = scanner.nextLine();
+        System.out.print("Enter adminName: ");
+        String adminName = scanner.nextLine();
 
         System.out.print("Enter Password: ");
         String password = scanner.nextLine();
 
-        if (authenticateAdmin(username, password)) {
+        if (authenticateAdmin(adminName, password)) {
             System.out.println("Login successful!");
             adminMenu(scanner);
         } else {
-            System.out.println("Invalid username or password.");
+            System.out.println("Invalid adminName or password.");
         }
     }
 
     // Method to authenticate admin credentials from the database
-    private static boolean authenticateAdmin(String username, String password) {
-        String query = "SELECT * FROM Admin WHERE username = '" + username + "' AND password = '" + password + "'";
+    private static boolean authenticateAdmin(String adminName, String password) {
+        String query = "SELECT * FROM Admin WHERE adminName = '" + adminName + "' AND adminPassword = '" + password + "'";
         ResultSet rs = dbManager.fetch(query);
         try {
             return rs.next();  // If a record is found, authentication is successful
