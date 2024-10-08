@@ -125,12 +125,6 @@ public class Pupil {
         System.out.println(firstName + " " + lastName + " has been enrolled in class " + pupilClass.getClassName());
     }
 
-    // Method to assign career guidance to the pupil
- // Method to assign career guidance to the pupil
-    public void assignCareerGuidance(CareerGuidance guidance) {
-        List<String> suggestions = guidance.generateSuggestion(interests); // Pass interests as List<String>
-        System.out.println("Career suggestions for " + firstName + " " + lastName + ": " + suggestions);
-    }
 
     // Method to assess soft skills
     public void assessSoftSkills(SoftSkillAssessment assessment) {

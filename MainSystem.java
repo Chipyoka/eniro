@@ -7,7 +7,7 @@ import java.util.Scanner;
 public class MainSystem {
     private static DatabaseManager dbManager;
     private static SoftSkillAssessment softSkillAssess = new SoftSkillAssessment();
-    private static CareerGuidance careerGuidance = new CareerGuidance();
+   
 
     public static void main(String[] args) {
         // Initialize the database manager with the database URL
