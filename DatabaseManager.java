@@ -117,4 +117,27 @@ public class DatabaseManager {
             System.out.println(e.getMessage());
         }
     }
+
+    public int countPupils() {
+    String query = "SELECT COUNT(*) FROM Pupil";
+    try {
+        Statement stmt = connection.createStatement();
+        ResultSet result = stmt.executeQuery(query);
+        if (result.next()) {
+            return result.getInt(1);
+        }
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+    return 0;
+}
+
+public void insertPupil (String query){
+    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+        pstmt.executeUpdate();
+        System.out.println("Pupil Record inserted successfully.");
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
+    }
+}
 }

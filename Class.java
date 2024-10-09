@@ -1,88 +1,50 @@
-import java.util.ArrayList;
-import java.util.List;
 
 public class Class {
     // Attributes
     private String classID;
-    private String className;
-    private String streamType;  // E.g., STEM, Business, Arts, etc.
-    private List<Pupil> pupils;
 
-    // Constructor
-    public Class(String classID, String className, String streamType) {
-        this.classID = classID;
-        this.className = className;
-        this.streamType = streamType;
-        this.pupils = new ArrayList<>();
-    }
-
-    // Getters and Setters
-    public String getClassID() {
-        return classID;
+    // default constructor
+    public Class() {
+        classID = "8D";   
     }
 
     public void setClassID(String classID) {
         this.classID = classID;
     }
 
-    public String getClassName() {
-        return className;
+    public String getClassID() {
+         return classID;
     }
 
-    public void setClassName(String className) {
-        this.className = className;
-    }
 
-    public String getStreamType() {
-        return streamType;
-    }
+    // determine class depending on the stream and grade level
 
-    public void setStreamType(String streamType) {
-        this.streamType = streamType;
-    }
+    public String matchClass(String stream,  String gradeLevel) {
 
-    public List<Pupil> getPupils() {
-        return pupils;
-    }
+        if(stream.equals("business")  && gradeLevel.equals("8")){
+            return "8A";
+         }else if (stream.equals("social sciences")  && gradeLevel.equals("8")){
+            return "8B";
+         }
+         else if (stream.equals("stem")  && gradeLevel.equals("8")){
+            return "8C";
+         
+         }else if (stream.equals("general")  && gradeLevel.equals("8")){
+            return "8D";
+         
+         }else if (stream.equals("business")  && gradeLevel.equals("10")){
+            return "10A";
+         
+         }else if (stream.equals("social sciences")  && gradeLevel.equals("10")){
+            return "10B";
+         
+         }else if (stream.equals("stem")  && gradeLevel.equals("10")){
+            return "10C";
+         }
 
-    public void setPupils(List<Pupil> pupils) {
-        this.pupils = pupils;
-    }
-
-    // Method to add a pupil to the class
-    public void addStudentToClass(Pupil pupil) {
-        if (!pupils.contains(pupil)) {
-            pupils.add(pupil);
-            System.out.println("Pupil " + pupil.getFirstName() + " " + pupil.getLastName() + " has been added to class " + className);
-        } else {
-            System.out.println("Pupil " + pupil.getFirstName() + " " + pupil.getLastName() + " is already in the class.");
+        else{
+            return "10D";
         }
-    }
 
-    // Method to remove a pupil from the class
-    public void removeStudent(Pupil pupil) {
-        if (pupils.contains(pupil)) {
-            pupils.remove(pupil);
-            System.out.println("Pupil " + pupil.getFirstName() + " " + pupil.getLastName() + " has been removed from class " + className);
-        } else {
-            System.out.println("Pupil not found in class " + className);
-        }
-    }
-
-    // Method to get the list of all pupils in the class
-    public void getClassList() {
-        if (pupils.isEmpty()) {
-            System.out.println("No pupils enrolled in class " + className);
-        } else {
-            System.out.println("List of pupils in class " + className + ":");
-            for (Pupil pupil : pupils) {
-                System.out.println("- Pupil ID: " + pupil.getPupilID() + ", Name: " + pupil.getFirstName() + " " + pupil.getLastName());
-            }
-        }
-    }
-
-    // Method to print class details
-    public void printClassDetails() {
-        System.out.println("Class ID: " + classID + ", Class Name: " + className + ", Stream Type: " + streamType);
     }
 }
