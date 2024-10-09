@@ -1,4 +1,5 @@
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class Admin {
     private String username;
@@ -57,6 +58,7 @@ public class Admin {
     }
 
     // Query all students using the existing connection
+    // Query all students and print the results to the console
     public void queryAllStudents() {
         String query = """
             SELECT 
@@ -68,9 +70,34 @@ public class Admin {
             JOIN Class ON Class.classID = Enrollment.classID;
         """;
 
-        dbManager.fetch(query);
-        ResultSet resultSet = dbManager.fetch(query);
+        try {
+            // Execute the query and fetch the result set
+            ResultSet resultSet = dbManager.fetch(query);
+
+            // Check if there are any results
+            if (!resultSet.isBeforeFirst()) {
+                System.out.println("No students found.");
+                return;
+            }
+
+            // Print header
+            System.out.printf("%-20s %-10s %-10s%n", " Fullname", "Class", "Stream");
+            System.out.println("--------------------------------------------");
+
+            // Iterate over the result set and print each row
+            while (resultSet.next()) {
+                String name = resultSet.getString("Name");
+                String classID = resultSet.getString("Class");
+                String stream = resultSet.getString("Stream");
+
+                // Print each row in a formatted way
+                System.out.printf("%-20s %-10s %-10s%n", name, classID, stream);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error fetching students: " + e.getMessage());
+        }
     }
+
 
 
 }
