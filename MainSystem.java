@@ -106,7 +106,7 @@ public class MainSystem {
         System.out.println("\n\n---------------------------------------------------------------");
         System.out.println("*******************      ADMIN SERVICE      *******************");
         System.out.println("---------------------------------------------------------------");
-        System.out.print("+--- Admin Login ");
+        System.out.println("+--- Admin Login ");
         System.out.print("Username: ");
         String adminName = scanner.nextLine();
 
@@ -181,7 +181,7 @@ public class MainSystem {
         System.out.println("\n\n---------------------------------------------------------------");
         System.out.println("*******************      ADMIN SERVICE      *******************");
         System.out.println("---------------------------------------------------------------");
-        System.out.print("+--- Create New Admin ");
+        System.out.println("+--- Create New Admin ");
         System.out.print("New Username: ");
         String newUsername = scanner.nextLine();
 

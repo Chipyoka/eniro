@@ -31,19 +31,32 @@ public class SoftSkillAssessment {
     // Method to assess skills and recommend a stream
     public String assessSkills(int communication, int teamwork, int problemSolving, int creativity) {
 
-        
+        // Define thresholds
+        int low = 5;   
+        int high = 10; 
 
-        // Simple logic to determine stream based on scores
-        if (communication > 7 && teamwork > 7) {
-            return "Arts";
-        } else if (problemSolving > 7 && creativity > 7) {
-            return "stem";
-        } else if (problemSolving > 7 && creativity > 7) {
-            return "stem";
+        // Simple logic to determine stream based on skill scores
+        if (communication >= high && teamwork >= high && creativity >= high) {
+            return "business"; 
+        } else if (communication >= high && teamwork >= high && creativity <= low) {
+            return "social sciences"; 
+        } else if (problemSolving >= high && creativity >= high && teamwork <= low) {
+            return "stem";  
+        } else if (problemSolving >= high && creativity >= high && teamwork >= high) {
+            return "stem";  
+        } else if (communication <= low && teamwork <= low && creativity <= low && problemSolving <= low) {
+            return "general studies"; 
+        } else if (problemSolving >= high && teamwork >= high && communication <= low && creativity <= low) {
+            return "stem"; 
+        } else if (communication >= high && problemSolving <= low && creativity >= high) {
+            return "social sciences";  
+        } else if (problemSolving <= low && creativity >= high && teamwork >= high) {
+            return "business"; 
         } else {
-            return "General";
+            return "General Studies";  
         }
     }
+
 
       // Method to ask a yes/no question and return a score based on the response
       public static int askQuestion(Scanner scanner, String question) {

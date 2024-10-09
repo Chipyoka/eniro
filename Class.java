@@ -29,7 +29,7 @@ public class Class {
          else if (stream.equals("stem")  && gradeLevel.equals("8")){
             return "8C";
          
-         }else if (stream.equals("general")  && gradeLevel.equals("8")){
+         }else if (stream.equals("general studies")  && gradeLevel.equals("8")){
             return "8D";
          
          }else if (stream.equals("business")  && gradeLevel.equals("10")){
