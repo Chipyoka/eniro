@@ -69,11 +69,9 @@ public class Pupil {
         dbManager.connect();
         int pupilID = (dbManager.countPupils() + 1);
    
-        String[] columns = {"pupilID", "firstName", "lastName", "age", "gender", "gradeLevel", "stream"};
-        String[] values = {String.valueOf(pupilID), newPupil.getFirstName(), newPupil.getLastName(), String.valueOf(newPupil.getAge()), newPupil.getGender(),newPupil.getGradeLevel(), stream}; 
+        String[] columns = {"pupilID", "firstName", "lastName", "age", "gender", "gradeLevel"};
+        String[] values = {String.valueOf(pupilID), newPupil.getFirstName(), newPupil.getLastName(), String.valueOf(newPupil.getAge()), newPupil.getGender(),newPupil.getGradeLevel()}; 
         dbManager.insert("Pupil", columns, values);
-
-        System.out.println("\nEnrolling pupil into the " + stream + " stream.");
 
         dbManager.disconnect();
      }

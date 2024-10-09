@@ -47,7 +47,7 @@ public class SoftSkillAssessment {
 
       // Method to ask a yes/no question and return a score based on the response
       public static int askQuestion(Scanner scanner, String question) {
-        System.out.println(question + " (yes/no): ");
+        System.out.print(question + " (yes/no): ");
         String response = scanner.nextLine().trim().toLowerCase();
     
         // If "yes", give 10 points; if "no", give 5 points
@@ -67,23 +67,25 @@ public class SoftSkillAssessment {
 
     public void questionnaire ( Scanner scanner){
 
-        System.out.println("\n--- Soft Skill Assessment ---");
+        System.out.println("\n\n---------------------------------------------------------------");
+        System.out.println("****************      ASSESS SOFT SKILLS      *****************");
+        System.out.println("---------------------------------------------------------------");
 
         // Ask communication-related questions
-        int communicationScore = askQuestion(scanner, "Do you enjoy speaking in front of groups or leading discussions?");
+        int communicationScore = askQuestion(scanner, "   Do you enjoy leading discussions?");
         
         // Ask teamwork-related questions
-        int teamworkScore = askQuestion(scanner, "Do you prefer working with others in a team rather than alone?");
+        int teamworkScore = askQuestion(scanner, "   Do you prefer working with others in a team?");
         
         // Ask problem-solving-related questions
-        int problemSolvingScore = askQuestion(scanner, "Do you enjoy solving puzzles or figuring out complex problems?");
+        int problemSolvingScore = askQuestion(scanner, "   Do you enjoy solving puzzles?");
         
         // Ask creativity-related questions
-        int creativityScore = askQuestion(scanner, "Do you often come up with creative ideas or new ways of doing things?");
+        int creativityScore = askQuestion(scanner, "   Do you often come up with new ways of doing things?");
 
-       this.stream = assessSkills(communicationScore, teamworkScore, problemSolvingScore, creativityScore);  // Assess and determine stream
+       this.stream = assessSkills(communicationScore, teamworkScore, problemSolvingScore, creativityScore);  
     
-       System.out.println("\nBased on the assessment, the recommended stream for the pupil is: " + stream);
+       System.out.println("\n   Recommended stream for the pupil is: " + stream);
    
     }
 

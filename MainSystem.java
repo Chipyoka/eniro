@@ -7,6 +7,8 @@ public class MainSystem {
    
 
     public static void main(String[] args) {
+
+
         // Initialize the database manager with the database URL
         dbManager = new DatabaseManager("school_system.db");
         dbManager.connect();
@@ -16,11 +18,13 @@ public class MainSystem {
             
             while (running) {
                 // Display the main menu
-                System.out.println("\n--- School System ---");
-                System.out.println("1. Enroll Pupil");
-                System.out.println("2. Admin");
-                System.out.println("3. Exit");
-                System.out.print("Select an option: ");
+                System.out.println("\n+============================================================+");
+                System.out.println("|                     ENIRO SYSTEM MENU                      |");
+                System.out.println("+============================================================+");
+                System.out.println("\n   1. Enroll Pupil");
+                System.out.println("   2. Admin");
+                System.out.println("   3. Exit");
+                System.out.print("\nSelect an option: ");
                 
                 int choice = scanner.nextInt();
                 scanner.nextLine();  // Consume newline
@@ -33,6 +37,7 @@ public class MainSystem {
                         System.out.println("Exiting the system...");
                     }
                     default -> System.out.println("Invalid choice. Please select a valid option.");
+                    
                 }
             }
             
@@ -44,50 +49,50 @@ public class MainSystem {
 
 
     private static void enrollPupil(Scanner scanner) {
-        System.out.println("\n--- Enroll New Pupil ---");
+        System.out.println("\n\n---------------------------------------------------------------");
+        System.out.println("*******************      ENROLL PUPIL      ********************");
+        System.out.println("---------------------------------------------------------------");
     
         // Collect basic pupil details
-        System.out.print("Enter Pupil ID: ");
+        System.out.print("   Enter Pupil ID: ");
         String gradeLevel = scanner.nextLine();
     
-        System.out.print("Enter First Name: ");
+        System.out.print("   Enter First Name: ");
         String firstName = scanner.nextLine();
     
-        System.out.print("Enter Last Name: ");
+        System.out.print("   Enter Last Name: ");
         String lastName = scanner.nextLine();
     
-        System.out.print("Enter Age: ");
+        System.out.print("   Enter Age: ");
         int age = scanner.nextInt();
         scanner.nextLine(); // Consume newline
     
-        System.out.print("Enter Gender (Male/Female): ");
+        System.out.print("   Enter Gender (Male/Female): ");
         String gender = scanner.nextLine();
         
+        // assess skills
         SoftSkillAssessment assessment = new SoftSkillAssessment();
-
         assessment.questionnaire(scanner);
-
         String stream = assessment.getStream();
      
+        // add as new pupil
         Pupil pupil = new Pupil(firstName, lastName, age, gender, gradeLevel);
         pupil.addPupil(pupil, stream);
 
+        // get class and enroll pupil
         String enrollDate = getCurrentDate();   
-    
-        // handle class ID and enrollment
         Enrollment enrollment = new Enrollment();
         enrollment.setEnrollmentDate(enrollDate);
 
         Class myClass = new Class();
-
         String classID = myClass.matchClass(stream, gradeLevel);
-
         enrollment.enrollPupil(classID);
         
     
 
     }
 
+    // get current date as enrollment date
     private static String getCurrentDate() {
         java.time.LocalDate currentDate = java.time.LocalDate.now();
         return String.format("%02d-%02d-%04d", currentDate.getDayOfMonth(), currentDate.getMonthValue(), currentDate.getYear());
@@ -98,12 +103,14 @@ public class MainSystem {
 
     // Method for admin login and showing admin management menu
     private static void adminLogin(Scanner scanner) {
-        System.out.println("\n--- Admin Login ---");
-
-        System.out.print("Enter adminName: ");
+        System.out.println("\n\n---------------------------------------------------------------");
+        System.out.println("*******************      ADMIN SERVICE      *******************");
+        System.out.println("---------------------------------------------------------------");
+        System.out.print("+--- Admin Login ");
+        System.out.print("Username: ");
         String adminName = scanner.nextLine();
 
-        System.out.print("Enter Password: ");
+        System.out.print("Password: ");
         String password = scanner.nextLine();
 
         if (authenticateAdmin(adminName, password)) {
@@ -131,21 +138,21 @@ public class MainSystem {
         boolean adminRunning = true;
 
         while (adminRunning) {
-            System.out.println("\n--- Admin Management ---");
-            System.out.println("1. Manage Pupil Records");
-            System.out.println("2. Manage Enrollments");
-            System.out.println("3. Manage Classes");
-            System.out.println("4. Logout");
+            System.out.println("\n\n---------------------------------------------------------------");
+            System.out.println("****************      ADMIN SERVICE MENU      *****************");
+            System.out.println("---------------------------------------------------------------");
+            System.out.println("   1. View Enrollment");
+            System.out.println("   2. New Admin");
+            System.out.println("   3. Logout");
 
             System.out.print("Select an option: ");
             int adminChoice = scanner.nextInt();
             scanner.nextLine();  // Consume newline
 
             switch (adminChoice) {
-                case 1 -> managePupilRecords(scanner);
-                case 2 -> manageEnrollments(scanner);
-                case 3 -> manageClasses(scanner);
-                case 4 -> {
+                case 1 -> viewEnrollments();
+                case 2 -> createAdmin(scanner);
+                case 3 -> {
                     adminRunning = false;
                     System.out.println("Logging out of admin mode...");
                 }
@@ -154,18 +161,39 @@ public class MainSystem {
         }
     }
 
-    // Placeholder methods for managing pupil records, enrollments, and classes
-    private static void managePupilRecords(Scanner scanner) {
-       System.out.print("We testing" + scanner);
+    private static void viewEnrollments() {
+        Admin  admin = new Admin();
+        admin.queryAllStudents();
     }
 
-    private static void manageEnrollments(Scanner scanner) {
-        // Implementation for managing enrollments
-        System.out.print("We testing" + scanner);
+    // Create new admin
+    private static void createAdmin(Scanner scanner) {
+
+        Admin  admin = new Admin();
+
+        System.out.println("\n\n---------------------------------------------------------------");
+        System.out.println("*******************      ADMIN SERVICE      *******************");
+        System.out.println("---------------------------------------------------------------");
+        System.out.print("+--- Create New Admin ");
+        System.out.print("New Username: ");
+        String newUsername = scanner.nextLine();
+
+        System.out.print("New Password: ");
+        String newPassword = scanner.nextLine();
+
+        System.out.print("Confirm New Password: ");
+        String confirmNewPassword = scanner.nextLine();
+
+        if(confirmNewPassword.equals(newPassword)){
+            admin.addAdmin(newUsername, confirmNewPassword);
+        }
+
+        else{
+            System.out.println("Passwords do not match");
+        }
+
+
+
     }
 
-    private static void manageClasses(Scanner scanner) {
-        // Implementation for managing classes
-        System.out.print("We testing" + scanner);
-    }
 }

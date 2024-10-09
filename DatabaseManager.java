@@ -14,7 +14,6 @@ public class DatabaseManager {
     public void connect() {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:" + databaseUrl);
-            System.out.println("Connection to SQLite has been established.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -25,7 +24,6 @@ public class DatabaseManager {
         try {
             if (connection != null) {
                 connection.close();
-                System.out.println("Connection to SQLite has been closed.");
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -63,7 +61,7 @@ public class DatabaseManager {
             }
 
             pstmt.executeUpdate();
-            System.out.println("Record inserted successfully.");
+            System.out.println("++");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -101,7 +99,6 @@ public class DatabaseManager {
                 pstmt.setString(i + 1, values[i]);
             }
             pstmt.executeUpdate();
-            System.out.println("Record updated successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -113,7 +110,6 @@ public class DatabaseManager {
 
         try (PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.executeUpdate();
-            System.out.println("Record deleted successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -133,12 +129,5 @@ public class DatabaseManager {
     return 0;
 }
 
-public void insertPupil (String query){
-    try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-        pstmt.executeUpdate();
-        System.out.println("Pupil Record inserted successfully.");
-    } catch (SQLException e) {
-        System.out.println(e.getMessage());
-    }
-}
+
 }
