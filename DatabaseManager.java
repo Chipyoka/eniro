@@ -1,7 +1,7 @@
 import java.sql.*;
 
 public class DatabaseManager {
-    private String databaseUrl;  // Path to the SQLite database file
+    private final String databaseUrl;  // Path to the SQLite database file
     private Connection connection;
 
     // Constructor

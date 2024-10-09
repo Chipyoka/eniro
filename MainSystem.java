@@ -11,39 +11,34 @@ public class MainSystem {
         dbManager = new DatabaseManager("school_system.db");
         dbManager.connect();
 
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
-
-        while (running) {
-            // Display the main menu
-            System.out.println("\n--- School System ---");
-            System.out.println("1. Enroll Pupil");
-            System.out.println("2. Admin");
-            System.out.println("3. Exit");
-            System.out.print("Select an option: ");
-
-            int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline
-
-            switch (choice) {
-                case 1:
-                    enrollPupil(scanner);
-                    break;
-                case 2:
-                    adminLogin(scanner);
-                    break;
-                case 3:
-                    running = false;
-                    System.out.println("Exiting the system...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
+        try (Scanner scanner = new Scanner(System.in)) {
+            boolean running = true;
+            
+            while (running) {
+                // Display the main menu
+                System.out.println("\n--- School System ---");
+                System.out.println("1. Enroll Pupil");
+                System.out.println("2. Admin");
+                System.out.println("3. Exit");
+                System.out.print("Select an option: ");
+                
+                int choice = scanner.nextInt();
+                scanner.nextLine();  // Consume newline
+                
+                switch (choice) {
+                    case 1 -> enrollPupil(scanner);
+                    case 2 -> adminLogin(scanner);
+                    case 3 -> {
+                        running = false;
+                        System.out.println("Exiting the system...");
+                    }
+                    default -> System.out.println("Invalid choice. Please select a valid option.");
+                }
             }
+            
+            // Disconnect from the database before exiting
+            dbManager.disconnect();
         }
-
-        // Disconnect from the database before exiting
-        dbManager.disconnect();
-        scanner.close();
     }
 
 
@@ -147,21 +142,14 @@ public class MainSystem {
             scanner.nextLine();  // Consume newline
 
             switch (adminChoice) {
-                case 1:
-                    managePupilRecords(scanner);
-                    break;
-                case 2:
-                    manageEnrollments(scanner);
-                    break;
-                case 3:
-                    manageClasses(scanner);
-                    break;
-                case 4:
+                case 1 -> managePupilRecords(scanner);
+                case 2 -> manageEnrollments(scanner);
+                case 3 -> manageClasses(scanner);
+                case 4 -> {
                     adminRunning = false;
                     System.out.println("Logging out of admin mode...");
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please select a valid option.");
+                }
+                default -> System.out.println("Invalid choice. Please select a valid option.");
             }
         }
     }

@@ -16,7 +16,7 @@ public class SoftSkillAssessment {
     // Getters and Setters
   
 
-    public void setScore(int Score) {
+    public void setScore(int score) {
         this.score = score;
     }
 
@@ -51,13 +51,17 @@ public class SoftSkillAssessment {
         String response = scanner.nextLine().trim().toLowerCase();
     
         // If "yes", give 10 points; if "no", give 5 points
-        if (response.equals("yes")) {
-            return 10;  // High score for positive answer
-        } else if (response.equals("no")) {
-            return 5;  // Lower score for negative answer
-        } else {
-            System.out.println("Invalid response. Defaulting to 5 points.");
-            return 5;  // Default to 5 for invalid input
+        switch (response) {
+            case "yes" -> {
+                return 10;  // High score for positive answer
+            }
+            case "no" -> {
+                return 5;  // Lower score for negative answer
+            }
+            default -> {
+                System.out.println("Invalid response. Defaulting to 5 points.");
+                return 5;  // Default to 5 for invalid input
+            }
         }
     }
 
