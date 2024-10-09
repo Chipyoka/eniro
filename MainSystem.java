@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
@@ -5,6 +6,30 @@ import java.util.Scanner;
 public class MainSystem {
     private static DatabaseManager dbManager;
    
+    public static void clearScreen() {
+        try {
+            // Execute the 'cls' command for Windows
+            new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error occurred while clearing the screen.");
+        }
+    }
+
+     // Public method to pause execution until the user presses Enter
+     @SuppressWarnings("resource")
+    public static void pauseScreen() {
+        System.out.println("\nPress Enter to continue...");
+        new Scanner(System.in).nextLine();  // Waits for user input
+    }
+
+    public static void eniro(){
+        System.out.println("\n+============================================================+");
+        System.out.println("|                     ENIRO SYSTEM MENU                      |");
+        System.out.println("+============================================================+");
+    }
+    
+
+
 
     public static void main(String[] args) {
 
@@ -18,9 +43,7 @@ public class MainSystem {
             
             while (running) {
                 // Display the main menu
-                System.out.println("\n+============================================================+");
-                System.out.println("|                     ENIRO SYSTEM MENU                      |");
-                System.out.println("+============================================================+");
+                eniro();
                 System.out.println("\n   1. Enroll Pupil");
                 System.out.println("   2. Admin");
                 System.out.println("   3. Exit");
@@ -29,6 +52,8 @@ public class MainSystem {
                 int choice = scanner.nextInt();
                 scanner.nextLine();  // Consume newline
                 
+                clearScreen();
+
                 switch (choice) {
                     case 1 -> enrollPupil(scanner);
                     case 2 -> adminLogin(scanner);
@@ -49,6 +74,7 @@ public class MainSystem {
 
 
     private static void enrollPupil(Scanner scanner) {
+        eniro();
         System.out.println("\n\n---------------------------------------------------------------");
         System.out.println("*******************      ENROLL PUPIL      ********************");
         System.out.println("---------------------------------------------------------------");
@@ -70,8 +96,11 @@ public class MainSystem {
         System.out.print("   Enter Gender (Male/Female): ");
         String gender = scanner.nextLine();
         
+        pauseScreen();
+        clearScreen();
         // assess skills
         SoftSkillAssessment assessment = new SoftSkillAssessment();
+        eniro();
         assessment.questionnaire(scanner);
         String stream = assessment.getStream();
      
@@ -87,7 +116,9 @@ public class MainSystem {
         Class myClass = new Class();
         String classID = myClass.matchClass(stream, gradeLevel);
         enrollment.enrollPupil(classID);
-        
+
+        pauseScreen();
+        clearScreen();
     
 
     }
@@ -103,6 +134,7 @@ public class MainSystem {
 
     // Method for admin login and showing admin management menu
     private static void adminLogin(Scanner scanner) {
+        eniro();
         System.out.println("\n\n---------------------------------------------------------------");
         System.out.println("*******************      ADMIN SERVICE      *******************");
         System.out.println("---------------------------------------------------------------");
@@ -115,10 +147,14 @@ public class MainSystem {
 
         if (authenticateAdmin(adminName, password)) {
             System.out.println("Login successful!");
+            pauseScreen();
+            clearScreen();
             adminMenu(scanner);
         } else {
             System.out.println("Invalid username or password.");
         }
+        pauseScreen();
+        clearScreen();
     }
 
     // Method to authenticate admin credentials from the database
@@ -145,6 +181,7 @@ public class MainSystem {
         boolean adminRunning = true;
 
         while (adminRunning) {
+            eniro();
             System.out.println("\n\n---------------------------------------------------------------");
             System.out.println("****************      ADMIN SERVICE MENU      *****************");
             System.out.println("---------------------------------------------------------------");
@@ -156,6 +193,7 @@ public class MainSystem {
             int adminChoice = scanner.nextInt();
             scanner.nextLine();  // Consume newline
 
+            clearScreen();
             switch (adminChoice) {
                 case 1 -> viewEnrollments();
                 case 2 -> createAdmin(scanner);
@@ -171,13 +209,15 @@ public class MainSystem {
     private static void viewEnrollments() {
         Admin  admin = new Admin(dbManager);
         admin.queryAllStudents();
+        pauseScreen();
+        clearScreen();
     }
 
     // Create new admin
     private static void createAdmin(Scanner scanner) {
 
         Admin  admin = new Admin(dbManager);
-
+        eniro();
         System.out.println("\n\n---------------------------------------------------------------");
         System.out.println("*******************      ADMIN SERVICE      *******************");
         System.out.println("---------------------------------------------------------------");
@@ -199,7 +239,7 @@ public class MainSystem {
             System.out.println("Passwords do not match");
         }
 
-
+        pauseScreen();
 
     }
 

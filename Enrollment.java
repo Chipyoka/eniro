@@ -25,7 +25,7 @@ public class Enrollment{
         String[] columns = {"pupilID", "classID", "enrollmentDate"};
         String[] values = {String.valueOf(pupilID), classID, enrollmentDate}; 
         dbManager.insert("Enrollment", columns, values); 
-        System.out.print("Enrollment Successful");
+        System.out.println("Enrollment Successful");
     
         dbManager.disconnect();
     }
