@@ -121,7 +121,7 @@ public class MainSystem {
         try {
             return rs.next();  // If a record is found, authentication is successful
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
             return false;
         }
     }
