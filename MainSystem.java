@@ -80,7 +80,8 @@ public class MainSystem {
         String enrollDate = getCurrentDate();   
     
         // handle class ID and enrollment
-        Enrollment enrollment = new Enrollment(enrollDate);
+        Enrollment enrollment = new Enrollment();
+        enrollment.setEnrollmentDate(enrollDate);
 
         Class myClass = new Class();
 

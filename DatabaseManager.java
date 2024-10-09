@@ -61,6 +61,7 @@ public class DatabaseManager {
             for (int i = 0; i < values.length; i++) {
                 pstmt.setString(i + 1, values[i]);
             }
+
             pstmt.executeUpdate();
             System.out.println("Record inserted successfully.");
         } catch (SQLException e) {

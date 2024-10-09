@@ -3,8 +3,8 @@ public class Enrollment{
     private String enrollmentDate;
 
 
-    Enrollment(String enrollmentDate){
-        this.enrollmentDate = enrollmentDate;
+    Enrollment(){
+        this.enrollmentDate = "01-01-2024";
     }
 
 
@@ -20,10 +20,10 @@ public class Enrollment{
     public void enrollPupil(String classID) {
         DatabaseManager dbManager = new DatabaseManager("school_system.db");
         dbManager.connect();
-        int pupilID = (dbManager.countPupils() + 1);
+        int pupilID = (dbManager.countPupils());
 
-        String[] columns = {"pupilID", "classID", "enrollmentID"};
-        String[] values = {String.valueOf(pupilID), classID, this.enrollmentDate};  
+        String[] columns = {"pupilID", "classID", "enrollmentDate"};
+        String[] values = {String.valueOf(pupilID), classID, enrollmentDate}; 
         dbManager.insert("Enrollment", columns, values);  // Insert the enrollment's record into the database
     
         dbManager.disconnect();
