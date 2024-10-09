@@ -117,14 +117,20 @@ public class MainSystem {
             System.out.println("Login successful!");
             adminMenu(scanner);
         } else {
-            System.out.println("Invalid adminName or password.");
+            System.out.println("Invalid username or password.");
         }
     }
 
     // Method to authenticate admin credentials from the database
     private static boolean authenticateAdmin(String adminName, String password) {
-        String query = "SELECT * FROM Admin WHERE adminName = '" + adminName + "' AND adminPassword = '" + password + "'";
+        // Hash the input password
+        Admin admin = new Admin(dbManager); // Create an instance of Admin to use the hashPassword method
+        String hashedPassword = admin.hashPassword(password); 
+
+        // Query to check if the username and hashed password match a record in the database
+        String query = "SELECT * FROM Admin WHERE adminName = '" + adminName + "' AND adminPassword = '" + hashedPassword + "'";
         ResultSet rs = dbManager.fetch(query);
+
         try {
             return rs.next();  // If a record is found, authentication is successful
         } catch (SQLException e) {
@@ -132,6 +138,7 @@ public class MainSystem {
             return false;
         }
     }
+
 
     // Method to display the admin management menu
     private static void adminMenu(Scanner scanner) {
@@ -162,14 +169,14 @@ public class MainSystem {
     }
 
     private static void viewEnrollments() {
-        Admin  admin = new Admin();
+        Admin  admin = new Admin(dbManager);
         admin.queryAllStudents();
     }
 
     // Create new admin
     private static void createAdmin(Scanner scanner) {
 
-        Admin  admin = new Admin();
+        Admin  admin = new Admin(dbManager);
 
         System.out.println("\n\n---------------------------------------------------------------");
         System.out.println("*******************      ADMIN SERVICE      *******************");

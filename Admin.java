@@ -1,11 +1,13 @@
+import java.sql.ResultSet;
 
 public class Admin {
-    // Attributes
     private String username;
-    private String passwordHash;  // For secure storage of the password
+    private String passwordHash;
+    private final DatabaseManager dbManager; // Use the existing DatabaseManager
 
-    // Constructor
-    public Admin() {
+    // Constructor takes the dbManager as a parameter
+    public Admin(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
         this.username = "admin";
         this.passwordHash = "password";
     }
@@ -43,9 +45,8 @@ public class Admin {
         }
     }
 
+    // Add Admin using the existing connection
     public void addAdmin(String newUsername, String newPassword) {
-        DatabaseManager dbManager = new DatabaseManager("school_system.db");
-        dbManager.connect();
         passwordHash = hashPassword(newPassword);
 
         String[] columns = {"adminName", "adminPassword"};
@@ -53,30 +54,23 @@ public class Admin {
 
         dbManager.insert("Admin", columns, values); 
         System.out.print("Admin Added Successfully");
-
-        dbManager.disconnect();
-
     }
 
+    // Query all students using the existing connection
     public void queryAllStudents() {
-    DatabaseManager dbManager = new DatabaseManager("school_system.db");
-    dbManager.connect();
-    String query = """
-                    SELECT 
-                        CONCAT( pupil.firstname, " ", Pupil.lastname) as Name,
-                        Enrollment.classID AS Class,
-                        Class.className As Stream
-                    FROM Enrollment
-                    JOIN
-                        Pupil ON Pupil.pupilID = Enrollment.pupilID
-                    JOIN 
-                        class ON Class.classID = Enrollment.classID;
-                    """;
+        String query = """
+            SELECT 
+                CONCAT(Pupil.firstname, ' ', Pupil.lastname) AS Name,
+                Enrollment.classID AS Class,
+                Class.className AS Stream
+            FROM Enrollment
+            JOIN Pupil ON Pupil.pupilID = Enrollment.pupilID
+            JOIN Class ON Class.classID = Enrollment.classID;
+        """;
 
-    dbManager.fetch(query);
-    dbManager.disconnect();
-}
-
+        dbManager.fetch(query);
+        ResultSet resultSet = dbManager.fetch(query);
+    }
 
 
 }
