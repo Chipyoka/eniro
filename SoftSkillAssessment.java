@@ -4,10 +4,12 @@ public class SoftSkillAssessment {
     // Attributes
     private int score;
     private String stream;
+    private final DatabaseManager dbManager;
 
   
     // Constructor
-    public SoftSkillAssessment() {
+    public SoftSkillAssessment(DatabaseManager dbManager) {
+        this.dbManager = dbManager;
         this.score = 2;
         this.stream = " ";
     }
@@ -28,6 +30,20 @@ public class SoftSkillAssessment {
         return stream;
     }
 
+
+    //    method to get total student score
+    public int totalScore(int communication, int teamwork, int problemSolving, int creativity) {
+        return (communication + teamwork + problemSolving + creativity);
+    }
+
+    public void recordAssessment(int score){
+        int pupilID = (dbManager.countPupils());
+
+        String[] columns = {"pupilID", "score"};
+        String[] values = {String.valueOf(pupilID), String.valueOf(score)};
+        dbManager.insert("SkillScore", columns, values);
+        System.out.println("   MESSAGE : Assessment Recorded");
+    }
     // Method to assess skills and recommend a stream
     public String assessSkills(int communication, int teamwork, int problemSolving, int creativity) {
 
@@ -131,22 +147,24 @@ public class SoftSkillAssessment {
         // Ask creativity-related questions
         int creativityScore = askQuestion(scanner, "   Do you often come up with new ways of doing things?");
 
-       this.stream = assessSkills(communicationScore, teamworkScore, problemSolvingScore, creativityScore);  
-    
-       System.out.println("\n   Recommended stream for the pupil is: " + stream.toUpperCase());
+       this.score = totalScore(communicationScore, teamworkScore, problemSolvingScore, creativityScore);
+       this.stream = assessSkills(communicationScore, teamworkScore, problemSolvingScore, creativityScore);
+
+       System.out.println("\n---------------------------------------------------------------");
+       System.out.println("   Total Assessment Score: " + score);
+       System.out.println("   Recommended stream based on Score: " + stream.toUpperCase());
+       recordAssessment(score);
 
     //    print career suggestions
 
        String[] careerList = suggestCareers(stream);
        int i = 0;
-       System.out.println("\n---------------------------------------------------------------");
 
+       System.out.println("\n   Career Suggestions");
        while (i < careerList.length) {
-            System.out.println("   Career Suggestion " + (i + 1) + ": " + careerList[i]);
+            System.out.println("   " + (i + 1) + ": " + careerList[i]);
             i++;
         }
     }
 
- 
-
-}
+    }

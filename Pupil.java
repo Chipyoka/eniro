@@ -7,8 +7,10 @@ public class Pupil {
     private int age;
     private String gender;
     private String gradeLevel;
+    private final DatabaseManager dbManager;
 
-    public Pupil(String firstName, String lastName, int age, String gender, String gradeLevel) { 
+    public Pupil(DatabaseManager dbManager, String firstName, String lastName, int age, String gender, String gradeLevel) {
+        this.dbManager = dbManager;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -64,16 +66,13 @@ public class Pupil {
 
 
     // Adding the student to the database
-     public void addPupil(Pupil newPupil, String stream){
-        DatabaseManager dbManager = new DatabaseManager("school_system.db");
-        dbManager.connect();
+     public void addPupil(Pupil newPupil){
         int pupilID = (dbManager.countPupils() + 1);
    
         String[] columns = {"pupilID", "firstName", "lastName", "age", "gender", "gradeLevel"};
         String[] values = {String.valueOf(pupilID), newPupil.getFirstName(), newPupil.getLastName(), String.valueOf(newPupil.getAge()), newPupil.getGender(),newPupil.getGradeLevel()}; 
         dbManager.insert("Pupil", columns, values);
 
-        dbManager.disconnect();
      }
 
 

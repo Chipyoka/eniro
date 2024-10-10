@@ -18,7 +18,7 @@ public class MainSystem {
      // Public method to pause execution until the user presses Enter
      @SuppressWarnings("resource")
     public static void pauseScreen() {
-        System.out.println("\n   Press Enter to continue...");
+        System.out.println("\nPress Enter to continue...");
         new Scanner(System.in).nextLine();  // Waits for user input
     }
 
@@ -59,7 +59,7 @@ public class MainSystem {
                     case 2 -> adminLogin(scanner);
                     case 3 -> {
                         running = false;
-                        System.out.println("   Exiting the system...");
+                        System.out.println("Exiting the system...");
                         pauseScreen();
                         clearScreen();
                     }
@@ -126,15 +126,17 @@ public class MainSystem {
         
         pauseScreen();
         clearScreen();
+        // add as new pupil
+        Pupil pupil = new Pupil(dbManager, firstName, lastName, age, gender, gradeLevel);
+        pupil.addPupil(pupil);
+
         // assess skills
-        SoftSkillAssessment assessment = new SoftSkillAssessment();
+        SoftSkillAssessment assessment = new SoftSkillAssessment(dbManager);
         eniro();
         assessment.questionnaire(scanner);
         String stream = assessment.getStream();
      
-        // add as new pupil
-        Pupil pupil = new Pupil(firstName, lastName, age, gender, gradeLevel);
-        pupil.addPupil(pupil, stream);
+
 
         // get class and enroll pupil
         String enrollDate = getCurrentDate();   
