@@ -139,7 +139,7 @@ public class SoftSkillAssessment {
 
        String[] careerList = suggestCareers(stream);
        int i = 0;
-       System.out.println("---------------------------------------------------------------");
+       System.out.println("\n---------------------------------------------------------------");
 
        while (i < careerList.length) {
             System.out.println("   Career Suggestion " + (i + 1) + ": " + careerList[i]);

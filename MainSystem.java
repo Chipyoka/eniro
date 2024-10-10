@@ -118,7 +118,7 @@ public class MainSystem {
         
                 // If all validations pass
                 System.out.println("\n---------------------------------------------------------------");
-                System.out.println("   Pupil details collected successfully!");
+                System.out.println("   Pupil details collected successfully!\n");
                 System.out.println("   Name: " + firstName + " " + lastName);
                 System.out.println("   Grade: " + gradeLevel);
                 System.out.println("   Age: " + age);
@@ -138,7 +138,7 @@ public class MainSystem {
 
         // get class and enroll pupil
         String enrollDate = getCurrentDate();   
-        Enrollment enrollment = new Enrollment();
+        Enrollment enrollment = new Enrollment(dbManager);
         enrollment.setEnrollmentDate(enrollDate);
 
         Class myClass = new Class();

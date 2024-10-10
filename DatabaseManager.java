@@ -61,7 +61,6 @@ public class DatabaseManager {
             }
 
             pstmt.executeUpdate();
-            System.out.println("++");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
