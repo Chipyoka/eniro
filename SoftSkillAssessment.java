@@ -78,6 +78,41 @@ public class SoftSkillAssessment {
         }
     }
 
+    public String[] suggestCareers(String stream) {
+        String[] careers = new String[3];
+    
+        switch (stream) {
+            case "business" -> {
+                careers[0] = "Manager";
+                careers[1] = "Accountant";
+                careers[2] = "Financial Analyst";
+                }
+            case "social sciences" -> {
+                careers[0] = "Social Worker";
+                careers[1] = "Counselor";
+                careers[2] = "Policy Analyst";
+                }
+            case "stem" -> {
+                careers[0] = "Engineer";
+                careers[1] = "Scientist";
+                careers[2] = "Doctor";
+                }
+            case "general studies" -> {
+                careers[0] = "Teacher";
+                careers[1] = "Writer";
+                careers[2] = "Librarian";
+                }
+            default -> {
+                careers[0] = "Career Counselor";
+                careers[1] = "Academic Advisor";
+                careers[2] = "Career Coach";
+                }
+        }
+    
+        return careers;
+    }
+      
+
     public void questionnaire ( Scanner scanner){
 
         System.out.println("\n\n---------------------------------------------------------------");
@@ -98,11 +133,20 @@ public class SoftSkillAssessment {
 
        this.stream = assessSkills(communicationScore, teamworkScore, problemSolvingScore, creativityScore);  
     
-       System.out.println("\n   Recommended stream for the pupil is: " + stream);
-   
+       System.out.println("\n   Recommended stream for the pupil is: " + stream.toUpperCase());
+
+    //    print career suggestions
+
+       String[] careerList = suggestCareers(stream);
+       int i = 0;
+       System.out.println("---------------------------------------------------------------");
+
+       while (i < careerList.length) {
+            System.out.println("   Career Suggestion " + (i + 1) + ": " + careerList[i]);
+            i++;
+        }
     }
 
-  
-  
+ 
 
 }

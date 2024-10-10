@@ -18,7 +18,7 @@ public class MainSystem {
      // Public method to pause execution until the user presses Enter
      @SuppressWarnings("resource")
     public static void pauseScreen() {
-        System.out.println("\nPress Enter to continue...");
+        System.out.println("\n   Press Enter to continue...");
         new Scanner(System.in).nextLine();  // Waits for user input
     }
 
@@ -59,9 +59,11 @@ public class MainSystem {
                     case 2 -> adminLogin(scanner);
                     case 3 -> {
                         running = false;
-                        System.out.println("Exiting the system...");
+                        System.out.println("   Exiting the system...");
+                        pauseScreen();
+                        clearScreen();
                     }
-                    default -> System.out.println("Invalid choice. Please select a valid option.");
+                    default -> System.out.println("   Invalid choice. Please select a valid option.");
                     
                 }
             }
@@ -79,22 +81,48 @@ public class MainSystem {
         System.out.println("*******************      ENROLL PUPIL      ********************");
         System.out.println("---------------------------------------------------------------");
     
-        // Collect basic pupil details
-        System.out.print("   Enter Pupil ID: ");
-        String gradeLevel = scanner.nextLine();
-    
-        System.out.print("   Enter First Name: ");
-        String firstName = scanner.nextLine();
-    
-        System.out.print("   Enter Last Name: ");
-        String lastName = scanner.nextLine();
-    
-        System.out.print("   Enter Age: ");
-        int age = scanner.nextInt();
-        scanner.nextLine(); // Consume newline
-    
-        System.out.print("   Enter Gender (Male/Female): ");
-        String gender = scanner.nextLine();
+                // Collect basic pupil details with validation
+                System.out.print("   Enter Pupil Grade (8 or 10): ");
+                String gradeLevel = scanner.nextLine();
+                if (!gradeLevel.equals("8") && !gradeLevel.equals("10")) {
+                    System.out.println("   Invalid grade. Grade must be either 8 or 10.");
+                    pauseScreen();
+                    clearScreen();
+                    return;  // Exit the program or loop to ask again
+                }
+        
+                System.out.print("   Enter First Name: ");
+                String firstName = scanner.nextLine();
+        
+                System.out.print("   Enter Last Name: ");
+                String lastName = scanner.nextLine();
+        
+                System.out.print("   Enter Age: ");
+                int age = scanner.nextInt();
+                if (age < 10 || age > 25) {
+                    System.out.println("   Invalid age. Age must be between 10 and 25.");
+                    pauseScreen();
+                    clearScreen();
+                    return;  // Exit the program or loop to ask again
+                }
+                scanner.nextLine(); // Consume newline
+        
+                System.out.print("   Enter Gender (Male/Female): ");
+                String gender = scanner.nextLine();
+                if (!gender.equalsIgnoreCase("Male") && !gender.equalsIgnoreCase("Female")) {
+                    System.out.println("   Invalid gender. Gender must be either Male or Female.");
+                    pauseScreen();
+                    clearScreen();
+                    return;  // Exit the program or loop to ask again
+                }
+        
+                // If all validations pass
+                System.out.println("\n---------------------------------------------------------------");
+                System.out.println("   Pupil details collected successfully!");
+                System.out.println("   Name: " + firstName + " " + lastName);
+                System.out.println("   Grade: " + gradeLevel);
+                System.out.println("   Age: " + age);
+                System.out.println("   Gender: " + gender);
         
         pauseScreen();
         clearScreen();

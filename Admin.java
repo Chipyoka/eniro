@@ -57,7 +57,6 @@ public class Admin {
         System.out.print("Admin Added Successfully");
     }
 
-    // Query all students using the existing connection
     // Query all students and print the results to the console
     public void queryAllStudents() {
         String query = """
@@ -91,7 +90,7 @@ public class Admin {
                 String stream = resultSet.getString("Stream");
 
                 // Print each row in a formatted way
-                System.out.printf("%-20s %-10s %-10s%n", name, classID, stream);
+                System.out.printf("%-20s %-10s %-10s%n", name.toUpperCase(), classID.toUpperCase(), stream.toUpperCase());
             }
         } catch (SQLException e) {
             System.out.println("Error fetching students: " + e.getMessage());
