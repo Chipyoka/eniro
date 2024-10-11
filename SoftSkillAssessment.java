@@ -15,13 +15,14 @@ public class SoftSkillAssessment {
     }
 
 
-    // Getters and Setters
+    // Setters
   
 
     public void setScore(int score) {
         this.score = score;
     }
-
+    
+    // setters
     public int getScore() {
         return score;
     }
@@ -31,11 +32,12 @@ public class SoftSkillAssessment {
     }
 
 
-    //    method to get total student score
+    //   method to get total student score
     public int totalScore(int communication, int teamwork, int problemSolving, int creativity) {
         return (communication + teamwork + problemSolving + creativity);
     }
 
+    // method to insert assessment into the database
     public void recordAssessment(int score){
         int pupilID = (dbManager.countPupils());
 
@@ -44,6 +46,7 @@ public class SoftSkillAssessment {
         dbManager.insert("SkillScore", columns, values);
         System.out.println("   MESSAGE : Assessment Recorded");
     }
+
     // Method to assess skills and recommend a stream
     public String assessSkills(int communication, int teamwork, int problemSolving, int creativity) {
 
@@ -94,6 +97,7 @@ public class SoftSkillAssessment {
         }
     }
 
+    // method to suggest careers
     public String[] suggestCareers(String stream) {
         String[] careers = new String[3];
     
@@ -129,6 +133,7 @@ public class SoftSkillAssessment {
     }
       
 
+    // method to print questions
     public void questionnaire ( Scanner scanner){
 
         System.out.println("\n\n---------------------------------------------------------------");

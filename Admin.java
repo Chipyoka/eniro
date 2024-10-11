@@ -4,32 +4,40 @@ import java.sql.SQLException;
 public class Admin {
     private String username;
     private String passwordHash;
-    private final DatabaseManager dbManager; // Use the existing DatabaseManager
+    private final DatabaseManager dbManager; 
 
-    // Constructor takes the dbManager as a parameter
+    /**
+        ADMIN LOGIN CREDENTIALS
+        USERNAME: admin
+        PASSWORD: password
+     */
+
+
+    // Constructor
     public Admin(DatabaseManager dbManager) {
         this.dbManager = dbManager;
         this.username = "admin";
         this.passwordHash = "password";
     }
 
-    // Getters and Setters
-
-    public String getUsername() {
-        return username;
-    }
-
+    // Setters
     public void setUsername(String username) {
         this.username = username;
     }
+   
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
 
+    //   getterz
+    public String getUsername() {
+        return username;
+    }
     public String getPasswordHash() {
         return passwordHash;
     }
 
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
+    
 
     // hash password
     public String hashPassword(String password) {

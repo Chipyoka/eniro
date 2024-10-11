@@ -8,10 +8,12 @@ public class Class {
         classID = "8D";   
     }
 
+   //  setter
     public void setClassID(String classID) {
         this.classID = classID;
     }
 
+   //  getter
     public String getClassID() {
          return classID;
     }

@@ -9,6 +9,8 @@ public class Pupil {
     private String gradeLevel;
     private final DatabaseManager dbManager;
 
+
+    // constructor
     public Pupil(DatabaseManager dbManager, String firstName, String lastName, int age, String gender, String gradeLevel) {
         this.dbManager = dbManager;
         this.firstName = firstName;
@@ -19,49 +21,51 @@ public class Pupil {
 
     }
     
-
-    // Getters and Setters
- 
-
-    public String getFirstName() {
-        return firstName;
-    }
+    // setters
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public int getAge() {
-        return age;
+    public void setGradeLevel(String gradeLevel) {
+        this.gradeLevel = gradeLevel;
     }
 
     public void setAge(int age) {
         this.age = age;
     }
 
-    public String getGender() {
-        return gender;
-    }
-
     public void setGender(String gender) {
         this.gender = gender;
     }
 
+    // getters
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+  
     public String getGradeLevel() {
         return gradeLevel;
     }
 
-    public void setGradeLevel(String gradeLevel) {
-        this.gradeLevel = gradeLevel;
+    public String getLastName() {
+        return lastName;
     }
+
+   
 
 
 
